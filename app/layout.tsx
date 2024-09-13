@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import Navbar from '@components/Navbar';
+import Background from "@components/Background";
 
 
 const geistSans = localFont({
@@ -31,7 +32,8 @@ export default function RootLayout({
       {/* <div className="gradient"/> */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      >  
+        <Background />
         <Navbar />
         {children}
       </body>

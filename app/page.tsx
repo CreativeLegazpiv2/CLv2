@@ -4,7 +4,6 @@ import { supabase } from '../lib/supabaseClient';
 export default function Home() {
   console.log(supabase); 
   return (
-    
     <div>
       <h1>hi</h1>
     </div>

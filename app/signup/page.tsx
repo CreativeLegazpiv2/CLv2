@@ -86,7 +86,7 @@ export default function Signup() {
   return (
     <div className="overflow-x-hidden relative mt-16">
         <h1 className="text-white font-extrabold text-center text-7xl">BE ONE OF US</h1>
-        <div className="flex w-auto h-full mt-5 mb-16 mx-12 bg-white rounded-3xl">
+        <div className="flex w-auto h-full mt-5 mx-12 bg-white rounded-3xl">
             {/* Login Picture Wrapper */}
             <div className="w-1/4 m-10 h-full md:block hidden">
                 <Image src="/assets/images/temp-img.jpg" alt="login img" 
@@ -102,12 +102,13 @@ export default function Signup() {
                 />
                 </div>
                 {/* Sign Up form wrapper*/}
-                <div className="my-10 mx-10">
+                <div className="my-10">
                     <p className="text-black text-3xl">REGISTER</p>
                     <form onSubmit={handleSignup} className="space-y-1">
                         <label className="block">
                             First Name:
                             <input
+                            className="border-b-2 border-b-black focus:outline-none"
                             type="text"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
@@ -118,6 +119,7 @@ export default function Signup() {
                         <label className="block">
                             Middle Name:
                             <input
+                                className="border-b-2 border-b-black focus:outline-none"
                                 type="text"
                                 value={middleName}
                                 onChange={(e) => setMiddleName(e.target.value)}
@@ -127,6 +129,7 @@ export default function Signup() {
                         <label className="block">
                             Last Name:
                             <input
+                            className="border-b-2 border-b-black focus:outline-none"
                             type="text"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
@@ -137,6 +140,7 @@ export default function Signup() {
                         <label className="block">
                             Email:
                             <input
+                                className="border-b-2 border-b-black focus:outline-none"
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -147,6 +151,7 @@ export default function Signup() {
                         <label className="block">
                             Password:
                             <input
+                                className="border-b-2 border-b-black focus:outline-none"
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -166,6 +171,7 @@ export default function Signup() {
                         <label>
                             Profession:
                             <input
+                                className="border-b-2 border-b-black focus:outline-none"
                                 type="text"
                                 value={profession}
                                 onChange={(e) => setProfession(e.target.value)}
@@ -175,6 +181,7 @@ export default function Signup() {
                         <label className="block">
                         Organization:
                         <input
+                            className="border-b-2 border-b-black focus:outline-none"
                             type="text"
                             value={organization}
                             onChange={(e) => setOrganization(e.target.value)}
@@ -185,6 +192,7 @@ export default function Signup() {
                             <label className="block">
                             Designation:
                             <input
+                                className="border-b-2 border-b-black focus:outline-none"
                                 type="text"
                                 value={designation}
                                 onChange={(e) => setDesignation(e.target.value)}
@@ -196,6 +204,7 @@ export default function Signup() {
                         <label className="block">
                             Contact No.:
                             <input
+                                className="border-b-2 border-b-black focus:outline-none"
                                 type="text"
                                 value={contactNo}
                                 onChange={(e) => setContactNo(e.target.value)}
@@ -213,6 +222,7 @@ export default function Signup() {
                         <label className="block">
                             Birthdate:
                             <input
+                                className="border-b-2 border-b-black focus:outline-none"
                                 type="date"
                                 value={birthdate}
                                 onChange={(e) => setBirthdate(e.target.value)}
@@ -227,6 +237,8 @@ export default function Signup() {
                 </div>
             </div>
         </div>
+        <div className="flex w-auto h-full mx-20 bg-neutral-300 rounded-b-3xl text-neutral-300 text-center">*</div>
+        <div className="flex w-auto h-full mx-32 bg-neutral-400 rounded-b-3xl text-neutral-400 text-center">*</div>
     </div>
 
   );

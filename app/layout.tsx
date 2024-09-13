@@ -34,10 +34,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >  
-        <Background />
-        <Navbar />
-        {children}
-        <Footer />
+      <div className="relative w-full min-h-screen">
+          <Background />
+          <Navbar />
+          {children}
+          <Footer />
+      </div>
       </body>
     </html>
   );

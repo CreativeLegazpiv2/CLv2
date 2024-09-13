@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import { supabase } from '@lib/supabaseClient'; // Adjust the path to your Supabase client
 

@@ -1,7 +1,5 @@
-"use client";
-
 import Image from 'next/image';
-// import {useState, useEffect} from 'react';
+// import Link from 'next/link';
 
 const navbar = () => {
   return (
@@ -15,13 +13,16 @@ const navbar = () => {
       </div>
 
       <div className="mr-5 text-black font-semibold">
-          <a href="#" className="mx-5 my-3">HOME</a>
-          <a href="#" className="mx-5 my-3">DIRECTORY</a>
-          <a href="#" className="mx-5 my-3">GALLERY</a>
+          <a href="#" className="mx-5 mb-5 py-2">HOME</a>
+          <a href="#" className="mx-5 mb-5 py-2">DIRECTORY</a>
+          <a href="#" className="mx-5 mb-5 py-2">GALLERY</a>
           <br className="md:hidden"/>
-          <a href="#" className="mx-5 my-3">FAQ</a>
-          <a href="#" className="mx-5 my-3">LOG IN</a>
+          <a href="#" className="mx-5 mb-5 py-2">FAQ</a>
+          <a href="#" className="mx-5 mb-5 py-2">LOG IN</a>
+          {/* <Link href='/signup'> */}
           <a href="#" className="mx-5 my-3 bg-green-300 rounded-xl px-5 py-1">Join Mukna</a>
+          {/* </Link> */}
+          
       </div>
   </div>
   )

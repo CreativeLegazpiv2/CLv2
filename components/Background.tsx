@@ -6,7 +6,8 @@ const Background = () => {
     <div className="">
       <Image className="absolute overflow-hidden" src="/assets/images/temp-bg.jpg" alt="bg image"
       layout="fill"
-      objectFit="cover"/>
+      objectFit="cover"
+      objectPosition="top"/>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '../lib/supabaseClient'; // Adjust the path to your Supabase client
+import { supabase } from '@lib/supabaseClient'; // Adjust the path to your Supabase client
 
 const Register = () => {
   const [email, setEmail] = useState('');

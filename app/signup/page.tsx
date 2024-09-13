@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import { supabase } from '@lib/supabaseClient';
 
 // Define a type for user profile
 interface UserProfile {
@@ -82,7 +84,7 @@ export default function Signup() {
   };
 
   return (
-    <div>
+    <div className="relative">
       <h1>Signup</h1>
       <form onSubmit={handleSignup}>
         <label>

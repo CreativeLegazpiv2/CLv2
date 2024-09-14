@@ -212,7 +212,7 @@ export default function RegisterForm() {
                 {/* Welcome Screen */}
                 {currentQuestion === -1 && (
                     <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
-                        <h2 className="text-2xl font-bold mb-4">Welcome to the Creative Individuals Registration Form! Please fill in your details below.</h2>
+                        <h2 className="text-2xl font-bold mb-4">Welcome to the Creative Individuals Registration Form! Let us know about your details by answering this form.</h2>
                         <button
                             onClick={nextQuestion}
                             className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"

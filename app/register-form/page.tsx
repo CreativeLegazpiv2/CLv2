@@ -235,7 +235,7 @@ export default function RegisterForm() {
                                 placeholder="Type your answer here..."
                                 value={answers[questions[currentQuestion].id] as string}
                                 onChange={handleInputChange}
-                                className="w-full p-2 border border-gray-300 rounded mb-4 text-black"
+                                className="w-full p-2 bg-transparent border-b-2 border-white text-white placeholder-gray-400 outline-none mb-4"
                             />
                         )}
 
@@ -247,7 +247,7 @@ export default function RegisterForm() {
                                 onChange={handleInputChange}
                                 maxLength={questions[currentQuestion].maxLength}
                                 rows={4}
-                                className="w-full p-2 border border-gray-300 rounded mb-2 text-black"
+                                className="w-full p-2 bg-transparent border-b-2 border-white text-white placeholder-gray-400 outline-none mb-4"
                             />
                         )}
 
@@ -273,14 +273,16 @@ export default function RegisterForm() {
                         {/* Error message */}
                         {error && <p className="text-red-500 mb-4">{error}</p>}
 
+                        {/* Button logic: Show "Skip" or "OK" based on input */}
                         <button
                             onClick={nextQuestion}
                             className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
                         >
-                            OK
+                            {answers[questions[currentQuestion].id] === '' && !questions[currentQuestion].required ? 'Skip' : 'OK'}
                         </button>
                     </div>
                 )}
+
 
                 {/* Thank You Screen */}
                 {currentQuestion === questions.length && (

@@ -115,6 +115,8 @@ export default function RegisterForm() {
         },
     ];
 
+    const progress = ((currentQuestion + 1) / (questions.length + 1)) * 100;
+
     // Handle text input change
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { id, value } = e.target;
@@ -194,7 +196,18 @@ export default function RegisterForm() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-no-repeat bg-center"
             style={{ backgroundImage: 'url(/assets/images/temp-bg2.jpg)' }}>
-            <div className="bg-opacity-80 bg-black p-6 rounded-lg text-white w-full max-w-lg">
+
+            {/* Progress Bar */}
+            <div className="absolute z-10 top-0 left-0 w-full h-2 bg-transparent">
+                <div
+                    className="h-full bg-orange-500 transition-width duration-300"
+                    style={{ width: `${progress}%` }}
+                ></div>
+            </div>
+            
+            <div className="absolute inset-0 bg-black opacity-50"></div>
+
+            <div className="relative z-10 bg-opacity-80 bg-black p-6 rounded-lg text-white w-full max-w-lg">
 
                 {/* Welcome Screen */}
                 {currentQuestion === -1 && (

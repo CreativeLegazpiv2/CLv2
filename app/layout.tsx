@@ -35,10 +35,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >  
       <div className="relative w-full min-h-screen">
-          <Background />
-          <Navbar />
+          {/* Made these comments for now - jaycel*/}
+          {/* <Background />
+          <Navbar /> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
       </div>
       </body>
     </html>

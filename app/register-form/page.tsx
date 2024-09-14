@@ -40,7 +40,9 @@ export default function RegisterForm() {
         twitter: '',
         portfoliolink: ''
     });
+
     const [error, setError] = useState<string | null>(null); // Error state
+    const [transitioning, setTransitioning] = useState(false); // Transition state
 
     // Array of questions
     const questions: Question[] = [
@@ -95,19 +97,19 @@ export default function RegisterForm() {
         },
         {
             id: 'instagram',
-            question: 'Let\'s follow each other in Instagram. Here\'s mine @creativelegazpi',
+            question: '(Optional) Let\'s follow each other in Instagram. Here\'s mine @creativelegazpi',
             type: 'text',
             required: false, // Optional
         },
         {
             id: 'facebook',
-            question: 'Let\'s also connect in Facebook. Here\'s mine @creativelegazpi',
+            question: '(Optional) Let\'s also connect in Facebook. Here\'s mine @creativelegazpi',
             type: 'text',
             required: false, // Optional
         },
         {
             id: 'twitter',
-            question: 'Let\'s follow each other in Twitter/X too. Here\'s mine @creativelegazpi',
+            question: '(Optional) Let\'s follow each other in Twitter/X too. Here\'s mine @creativelegazpi',
             type: 'text',
             required: false, // Optional
         },
@@ -171,17 +173,21 @@ export default function RegisterForm() {
         return true; // Validation passed
     };
 
-    // Move to next question
-    const nextQuestion = () => {
+     // Move to next question with transition
+     const nextQuestion = () => {
         if (validateInput()) {
-            if (currentQuestion < questions.length - 1) {
-                setCurrentQuestion(currentQuestion + 1);
+            setTransitioning(true); // Start fade-out
+            setTimeout(() => {
+                if (currentQuestion < questions.length - 1) {
+                    setCurrentQuestion(currentQuestion + 1);
+                } else {
+                    // Form is completed, handle form submission
+                    setCurrentQuestion(questions.length); // Set to length for thank-you screen
+                    console.log('Form submitted:', answers);
+                }
+                setTransitioning(false); // Start fade-in
                 setError(null); // Clear error when moving to the next question
-            } else {
-                // Form is completed, handle form submission
-                setCurrentQuestion(questions.length); // Set to length for thank-you screen
-                console.log('Form submitted:', answers);
-            }
+            }, 300); // Wait for fade-out transition (300ms)
         }
     };
 
@@ -192,7 +198,7 @@ export default function RegisterForm() {
 
                 {/* Welcome Screen */}
                 {currentQuestion === -1 && (
-                    <div>
+                    <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
                         <h2 className="text-2xl font-bold mb-4">Welcome to the Creative Individuals Registration Form! Please fill in your details below.</h2>
                         <button
                             onClick={nextQuestion}
@@ -205,7 +211,7 @@ export default function RegisterForm() {
 
                 {/* Form Questions */}
                 {currentQuestion >= 0 && currentQuestion < questions.length && (
-                    <div>
+                    <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
                         <h2 className="text-2xl font-bold mb-4">{questions[currentQuestion].question}</h2>
 
                         {/* Input field for text or textarea questions */}
@@ -265,7 +271,7 @@ export default function RegisterForm() {
 
                 {/* Thank You Screen */}
                 {currentQuestion === questions.length && (
-                    <div>
+                    <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
                         <h2 className="text-2xl font-bold mb-4">Thank you for filling out the form!</h2>
                         <p>We appreciate your time and effort in providing us with your details. We&apos;ll be in touch soon!</p>
                     </div>

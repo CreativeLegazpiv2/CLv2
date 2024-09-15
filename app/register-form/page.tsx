@@ -1,6 +1,17 @@
 "use client";
 
 import { useState } from 'react';
+import Lottie from 'lottie-react'; // Import Lottie component from lottie-react
+import graphicDesignAnimation from '../animation/bg1.json'; // Import Lottie animations
+import webDevelopmentAnimation from '../animation/bg3.json';
+import photographyAnimation from '../animation/bg8.json';
+import writingAnimation from '../animation/bg6.json';
+import musicAnimation from '../animation/bg5.json';
+import gamingAnimation from '../animation/bg4.json';
+import filmAnimation from '../animation/bg7.json';
+import fineArtsAnimation from '../animation/bg9.json';
+import fashionDesignAnimation from '../animation/bg2.json';
+import otherAnimation from '../animation/bg10.json'; // Add all other Lottie animations
 
 // Define the structure for the form answers
 interface FormAnswers {
@@ -44,17 +55,31 @@ export default function RegisterForm() {
     const [error, setError] = useState<string | null>(null); // Error state
     const [transitioning, setTransitioning] = useState(false); // Transition state
 
+    // List of Lottie animation data based on creative domains
+    const backgrounds = [
+        { domain: 'Graphic Design', animationData: graphicDesignAnimation },
+        { domain: 'Web Development', animationData: webDevelopmentAnimation },
+        { domain: 'Photography', animationData: photographyAnimation },
+        { domain: 'Writing', animationData: writingAnimation },
+        { domain: 'Music', animationData: musicAnimation },
+        { domain: 'Gaming', animationData: gamingAnimation },
+        { domain: 'Film', animationData: filmAnimation },
+        { domain: 'Fine Arts', animationData: fineArtsAnimation },
+        { domain: 'Fashion Design', animationData: fashionDesignAnimation },
+        { domain: 'Other', animationData: otherAnimation },
+    ];
+
     // Array of questions
     const questions: Question[] = [
         {
             id: 'firstName',
-            question: 'Please let us know your first name.',
+            question: 'Could you please share your first name with us?',
             type: 'text',
             required: true,
         },
         {
             id: 'creativeField',
-            question: 'We\'d love to know which creative domain you work on.',
+            question: "We'd love to know more about your work! Which creative domain do you dabble in?",
             type: 'buttons',
             options: [
                 'Graphic Design',
@@ -72,44 +97,50 @@ export default function RegisterForm() {
         },
         {
             id: 'address',
-            question: 'Please let us know where you are located. (City/Municipality/Province)',
+            question: 'Could you kindly share your location with us?',
             type: 'text',
             required: true,
         },
         {
             id: 'mobileNumber',
-            question: 'Please let us know your mobile number so we can reach out to you whenever you\'re not online.',
+            question: "May we ask for your mobile number so we can reach out to you whenever you're not online?",
             type: 'text',
             required: true,
         },
         {
             id: 'email',
-            question: 'Please share with us your email address for more formal communication with you soon.',
+            question: "Could you please share your email address with us? We'll use it to stay in touch and keep you updated in a more formal way!",
             type: 'text',
             required: true,
         },
         {
             id: 'bio',
-            question: 'We\'ll appreciate to know you more, please share a short bio about yourself. (300 characters max)',
+            question: "We'd appreciate to know you more, how about sharing a short bio about yourself and your work?",
             type: 'textarea',
             maxLength: 300,
             required: true,
         },
         {
             id: 'instagram',
-            question: '(Optional) Let\'s follow each other in Instagram. Here\'s mine @creativelegazpi',
+            question: 'What’s your Instagram? We’d love to see your visual journey there!',
             type: 'text',
             required: false, // Optional
         },
         {
             id: 'facebook',
-            question: '(Optional) Let\'s also connect in Facebook. Here\'s mine @creativelegazpi',
+            question: 'Are you on Facebook? Let’s connect and share creative insights!',
             type: 'text',
             required: false, // Optional
         },
         {
             id: 'twitter',
-            question: '(Optional) Let\'s follow each other in Twitter/X too. Here\'s mine @creativelegazpi',
+            question: 'Do you tweet? Share your Twitter, and we’ll keep the conversation going!',
+            type: 'text',
+            required: false, // Optional
+        },
+        {
+            id: 'portfoliolink',
+            question: "We want to know more about your work, so we'll appreciate it if you share your portfolio on Behance, your own website, or any platform you're using.",
             type: 'text',
             required: false, // Optional
         },
@@ -143,15 +174,12 @@ export default function RegisterForm() {
 
     // Validation logic to ensure required fields are filled
     const validateInput = () => {
-        // Check if currentQuestion is valid
         if (currentQuestion === -1) {
-            // No validation needed for the welcome screen
             return true;
         }
     
         const currentQuestionObj = questions[currentQuestion];
         if (!currentQuestionObj) {
-            // If currentQuestionObj is not defined, something went wrong
             setError('An error occurred. Please try again.');
             return false;
         }
@@ -175,123 +203,147 @@ export default function RegisterForm() {
         return true; // Validation passed
     };
 
-     // Move to next question with transition
-     const nextQuestion = () => {
+    // Move to next question with transition
+    const nextQuestion = () => {
         if (validateInput()) {
             setTransitioning(true); // Start fade-out
             setTimeout(() => {
                 if (currentQuestion < questions.length - 1) {
                     setCurrentQuestion(currentQuestion + 1);
                 } else {
-                    // Form is completed, handle form submission
-                    setCurrentQuestion(questions.length); // Set to length for thank-you screen
+                    setCurrentQuestion(questions.length); // Form completed
                     console.log('Form submitted:', answers);
                 }
                 setTransitioning(false); // Start fade-in
-                setError(null); // Clear error when moving to the next question
-            }, 300); // Wait for fade-out transition (300ms)
+                setError(null); // Clear error
+            }, 300);
         }
     };
 
+    // Determine current background animation based on the current question
+    const currentBackgroundAnimation = backgrounds[currentQuestion + 1]?.animationData || backgrounds[0].animationData;
+
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-no-repeat bg-center">
-            <div className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/assets/images/Clip%20path%20group.svg')` }}/>
+        <div className="flex flex-col items-center justify-center min-h-screen relative transition-all duration-500">
+            {/* Lottie Background */}
+            <Lottie 
+                animationData={currentBackgroundAnimation} 
+                loop={true} 
+                autoplay={true} 
+                className="fixed top-0 left-0 w-full h-full object-cover pointer-events-none z-0" 
+            />
+
             {/* Progress Bar */}
-                <div className="absolute z-10 top-0 left-0 w-full h-2 bg-transparent">
-                    <div
-                        className="h-full bg-orange-500 transition-width duration-300"
-                        style={{ width: `${progress}%` }}
-                    ></div>
-                </div>
-                
-                <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="absolute z-10 top-0 left-0 w-full h-2 bg-transparent">
+                <div
+                    className="h-full bg-[#403737] transition-width duration-300"
+                    style={{ width: `${progress}%` }}
+                ></div>
+            </div>
 
-                <div className="relative z-10 bg-opacity-80 bg-black p-6 rounded-lg text-white w-full max-w-lg">
+            {/* Overlay and Form Container */}
+            <div className="relative z-20 bg-white bg-opacity-80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl max-w-lg w-full mx-4 animate-fade-in-up">
+                {/* Welcome Screen */}
+                {currentQuestion === -1 && (
+                    <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
+                        <h2 className="text-3xl font-bold mb-6 text-center leading-tight">
+                            <span className="underline decoration-[#403737]">Welcome</span> to the Creative Individuals Registration Form!
+                        </h2>
+                        <p className="text-sm text-gray-700 mb-4 text-center">
+                            We're excited to have you join us. Please take a moment to fill in your details below. Rest assured, your information will be kept secure in accordance with the <strong>Privacy Act</strong>.
+                        </p>
+                        <button
+                            onClick={nextQuestion}
+                            className="bg-[#403737] text-white px-6 py-3 rounded-full hover:bg-[#2f2f2f] transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2f2f2f] shadow-lg"
+                        >
+                            Let&apos;s Get Started
+                        </button>
+                    </div>
+                )}
 
-                    {/* Welcome Screen */}
-                    {currentQuestion === -1 && (
-                        <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
-                            <h2 className="text-2xl font-bold mb-4">Welcome to the Creative Individuals Registration Form! Let us know about your details by answering this form.</h2>
-                            <button
-                                onClick={nextQuestion}
-                                className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
-                            >
-                                Let&apos;s Get Started
-                            </button>
-                        </div>
-                    )}
+                {/* Form Questions */}
+                {currentQuestion >= 0 && currentQuestion < questions.length && (
+                    <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
+                        <h2 className="text-xl font-semibold mb-4 leading-tight">
+                            {questions[currentQuestion].question.split("!")[0]}
+                            <span className="font-bold text-[#403737]">!</span>
+                            {questions[currentQuestion].question.split("!")[1]}
+                        </h2>
 
-                    {/* Form Questions */}
-                    {currentQuestion >= 0 && currentQuestion < questions.length && (
-                        <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
-                            <h2 className="text-2xl font-bold mb-4">{questions[currentQuestion].question}</h2>
+                        {/* Input field for text or textarea questions */}
+                        {questions[currentQuestion].type === 'text' && (
+                            <input
+                                type="text"
+                                id={questions[currentQuestion].id}
+                                placeholder="Type your answer here..."
+                                value={answers[questions[currentQuestion].id] as string}
+                                onChange={handleInputChange}
+                                className="w-full p-3 bg-transparent border-b-2 border-gray-300 text-black placeholder-gray-500 outline-none mb-6 focus:border-[#403737] transition duration-300 ease-in-out focus:shadow-lg"
+                            />
+                        )}
 
-                            {/* Input field for text or textarea questions */}
-                            {questions[currentQuestion].type === 'text' && (
-                                <input
-                                    type="text"
-                                    id={questions[currentQuestion].id}
-                                    placeholder="Type your answer here..."
-                                    value={answers[questions[currentQuestion].id] as string}
-                                    onChange={handleInputChange}
-                                    className="w-full p-2 bg-transparent border-b-2 border-white text-white placeholder-gray-400 outline-none mb-4"
-                                />
-                            )}
+                        {questions[currentQuestion].type === 'textarea' && (
+                            <textarea
+                                id={questions[currentQuestion].id}
+                                placeholder="Type your answer here..."
+                                value={answers[questions[currentQuestion].id] as string}
+                                onChange={handleInputChange}
+                                maxLength={questions[currentQuestion].maxLength}
+                                rows={4}
+                                className="w-full p-3 bg-transparent border-b-2 border-gray-300 text-black placeholder-gray-500 outline-none mb-6 focus:border-[#403737] transition duration-300 ease-in-out focus:shadow-lg"
+                            />
+                        )}
 
-                            {questions[currentQuestion].type === 'textarea' && (
-                                <textarea
-                                    id={questions[currentQuestion].id}
-                                    placeholder="Type your answer here..."
-                                    value={answers[questions[currentQuestion].id] as string}
-                                    onChange={handleInputChange}
-                                    maxLength={questions[currentQuestion].maxLength}
-                                    rows={4}
-                                    className="w-full p-2 bg-transparent border-b-2 border-white text-white placeholder-gray-400 outline-none mb-4"
-                                />
-                            )}
+                        {/* Button selection for "creative field" */}
+                        {questions[currentQuestion].type === 'buttons' && (
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                {questions[currentQuestion].options?.map((option) => (
+                                    <button
+                                        key={option}
+                                        onClick={() => handleOptionToggle(option)}
+                                        className={`px-4 py-2 rounded-full transition ${
+                                            answers.creativeField.includes(option)
+                                                ? 'bg-[#403737] text-white shadow-lg'
+                                                : 'bg-gray-200 text-black'
+                                        } hover:bg-[#2f2f2f] hover:scale-105 transform focus:outline-none focus:ring-2 focus:ring-[#403737]`}
+                                    >
+                                        {option}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
 
-                            {/* Button selection for "creative field" */}
-                            {questions[currentQuestion].type === 'buttons' && (
-                                <div className="grid grid-cols-2 gap-2 mb-4">
-                                    {questions[currentQuestion].options?.map((option) => (
-                                        <button
-                                            key={option}
-                                            onClick={() => handleOptionToggle(option)}
-                                            className={`px-4 py-2 rounded transition ${
-                                                answers.creativeField.includes(option)
-                                                    ? 'bg-orange-500 text-white'
-                                                    : 'bg-gray-700 text-white'
-                                            } hover:bg-orange-600`}
-                                        >
-                                            {option}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
+                        {/* Error message */}
+                        {error && <p className="text-red-500 mb-4 animate-pulse">{error}</p>}
 
-                            {/* Error message */}
-                            {error && <p className="text-red-500 mb-4">{error}</p>}
+                        {/* Button logic: Show "Skip" or "OK" based on input */}
+                        <button
+                            onClick={nextQuestion}
+                            className="bg-[#403737] text-white px-6 py-3 rounded-full hover:bg-[#2f2f2f] transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2f2f2f] shadow-lg"
+                        >
+                            {answers[questions[currentQuestion].id] === '' && !questions[currentQuestion].required ? 'Skip' : 'OK'}
+                        </button>
+                    </div>
+                )}
 
-                            {/* Button logic: Show "Skip" or "OK" based on input */}
-                            <button
-                                onClick={nextQuestion}
-                                className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
-                            >
-                                {answers[questions[currentQuestion].id] === '' && !questions[currentQuestion].required ? 'Skip' : 'OK'}
-                            </button>
-                        </div>
-                    )}
-
-
-                    {/* Thank You Screen */}
-                    {currentQuestion === questions.length && (
-                        <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
-                            <h2 className="text-2xl font-bold mb-4">Thank you for filling out the form!</h2>
-                            <p>We appreciate your time and effort in providing us with your details. We&apos;ll be in touch soon!</p>
-                        </div>
-                    )}
-            </div> 
+                {/* Thank You Screen */}
+                {currentQuestion === questions.length && (
+                    <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
+                        <h2 className="text-2xl font-semibold mb-4 text-center leading-tight">
+                            We're delighted to have you on board!
+                        </h2>
+                        <p className="text-sm text-gray-700 mb-4 text-center">
+                            We're also grateful for your time and effort on sharing your details with us. Please keep in touch with us on our website <a href="https://creativelegazpi.ph" className="underline text-[#403737]">creativelegazpi.ph</a> when the directory goes live. Thank you so much! We'll be in touch soon.
+                        </p>
+                        <button
+                            onClick={() => window.location.href = 'https://creativelegazpi.ph'}
+                            className="bg-[#403737] text-white px-6 py-3 rounded-full hover:bg-[#2f2f2f] transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2f2f2f] shadow-lg"
+                        >
+                            Visit Our Website
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

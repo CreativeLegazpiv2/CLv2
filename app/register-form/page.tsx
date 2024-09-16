@@ -175,7 +175,6 @@ export default function RegisterForm() {
         setError(null); // Clear error on selection change
     };
 
-    // Validation logic to ensure required fields are filled
     const validateInput = () => {
         if (currentQuestion === -1) {
             return true;
@@ -203,13 +202,12 @@ export default function RegisterForm() {
             }
         }
     
-        return true; // Validation passed
+        return true; 
     };
 
     const submitForm = async () => {
         const formData = new FormData();
     
-        // Helper function to ensure "None" is used for empty values
         const getValueOrNone = (value: string | string[] | undefined) => {
             if (Array.isArray(value)) {
                 return value.length > 0 ? value : ['None'];  // Return array with 'None' if empty
@@ -217,29 +215,26 @@ export default function RegisterForm() {
             return value?.trim() === '' ? 'None' : value || 'None';
         };
     
-        // Append form data for non-multiple choice fields
         formData.append('entry.1423761216', answers.firstName); 
         formData.append('entry.596935029', answers.address); 
         formData.append('entry.1486545489', answers.mobileNumber); 
         formData.append('entry.905488960', answers.email); 
         formData.append('entry.266776651', answers.bio); 
-        formData.append('entry.933937910', getValueOrNone(answers.instagram) as string);  // Cast to string
+        formData.append('entry.933937910', getValueOrNone(answers.instagram) as string); 
         formData.append('entry.2052783211', getValueOrNone(answers.facebook) as string); 
         formData.append('entry.1476922231', getValueOrNone(answers.twitter) as string); 
         formData.append('entry.133240640', getValueOrNone(answers.portfoliolink) as string); 
         
-        // Handle multiple selected options for creativeField
         const creativeFields = answers.creativeField || [];
         
         if (Array.isArray(creativeFields)) {
             creativeFields.forEach((field) => {
-                formData.append('entry.873872541', field);  // Append each field separately
+                formData.append('entry.873872541', field);  
             });
         } else {
-            formData.append('entry.873872541', 'None');  // Fallback if no fields selected
+            formData.append('entry.873872541', 'None'); 
         }
     
-        // Post to Google Forms
         await fetch('https://docs.google.com/forms/d/e/1FAIpQLScSyKe6QAmaAvveOoKVXWaz3uGvdy_UglcU4wAYizFgQa9jhw/formResponse', {
             method: 'POST',
             body: formData,
@@ -260,25 +255,24 @@ export default function RegisterForm() {
     // Move to next question with transition
     const nextQuestion = () => {
         if (validateInput()) {
-            setTransitioning(true); // Start fade-out
+            setTransitioning(true); 
             setTimeout(() => {
                 if (currentQuestion < questions.length - 1) {
                     setCurrentQuestion(currentQuestion + 1);
                 } else {
-                    setCurrentQuestion(questions.length); // Form completed
+                    setCurrentQuestion(questions.length); 
                     submitForm().then(() => {
                         console.log('Form submitted:', answers);
                     }).catch(err => {
                         console.error('Form submission error:', err);
                     });
                 }
-                setTransitioning(false); // Start fade-in
-                setError(null); // Clear error
+                setTransitioning(false); 
+                setError(null); 
             }, 300);
         }
     };
 
-    // Determine current background animation based on the current question
     const currentBackgroundAnimation = backgrounds[currentQuestion + 1]?.animationData || backgrounds[0].animationData;
 
     return (

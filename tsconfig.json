@@ -6,6 +6,8 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "target": "es2015", // or "es6", "es2017", etc.
+    "downlevelIteration": true, // Optional, enables support for iterating over ES6 iterables in ES5
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,

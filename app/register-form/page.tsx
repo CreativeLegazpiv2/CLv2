@@ -208,22 +208,39 @@ export default function RegisterForm() {
 
     const submitForm = async () => {
         const formData = new FormData();
-        formData.append('entry.1423761216', answers.firstName); // Replace 'entry.XXXXXX' with the field name from Google Forms
-        formData.append('entry.596935029', answers.address); // Replace with field names
-        formData.append('entry.1486545489', answers.mobileNumber); // Replace with field names
-        formData.append('entry.905488960', answers.email); // Replace with field names
-        formData.append('entry.266776651', answers.bio); // Replace with field names
-        formData.append('entry.933937910', answers.instagram); // Replace with field names
-        formData.append('entry.2052783211', answers.facebook); // Replace with field names
-        formData.append('entry.1476922231', answers.twitter); // Replace with field names
-        formData.append('entry.133240640', answers.portfoliolink); // Replace with field names
-        formData.append('entry.873872541', answers.creativeField.join(',')); // Replace with field names
+
+        const getValueOrNone = (value: string | string[] | undefined) => {
+            if (Array.isArray(value)) {
+                return value.length > 0 ? value.join(', ') : 'None';
+            }
+            return value?.trim() === '' ? 'None' : value || 'None';
+        };
+
+        formData.append('entry.1423761216', answers.firstName); 
+        formData.append('entry.596935029', answers.address); 
+        formData.append('entry.1486545489', answers.mobileNumber); 
+        formData.append('entry.905488960', answers.email); 
+        formData.append('entry.266776651', answers.bio); 
+        formData.append('entry.933937910', getValueOrNone(answers.instagram));
+        formData.append('entry.2052783211', getValueOrNone(answers.facebook)); 
+        formData.append('entry.1476922231', getValueOrNone(answers.twitter)); 
+        formData.append('entry.133240640', getValueOrNone(answers.portfoliolink)); 
+        formData.append('entry.873872541', answers.creativeField.join(',')); 
 
         // Post to Google Forms
         await fetch('https://docs.google.com/forms/d/e/1FAIpQLScSyKe6QAmaAvveOoKVXWaz3uGvdy_UglcU4wAYizFgQa9jhw/formResponse', {
             method: 'POST',
             body: formData,
             mode: 'no-cors'
+        }).then(response => {
+            if (response.ok) {
+                console.log('Form submitted successfully:', answers);
+            } else {
+                console.error('Form submission error:', response.statusText);
+            }
+        })
+        .catch(err => {
+            console.error('Form submission error:', err);
         });
     };
 

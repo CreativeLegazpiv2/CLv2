@@ -15,7 +15,9 @@ type Sparkle = {
 const LandingPage = () => {
   const router = useRouter();
   const [isOpened, setIsOpened] = useState(false);
+  // eslint-disable-next-line
   const [isHovered, setIsHovered] = useState(false);
+   // eslint-disable-next-line
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 

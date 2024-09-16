@@ -206,6 +206,27 @@ export default function RegisterForm() {
         return true; // Validation passed
     };
 
+    const submitForm = async () => {
+        const formData = new FormData();
+        formData.append('entry.1423761216', answers.firstName); // Replace 'entry.XXXXXX' with the field name from Google Forms
+        formData.append('entry.596935029', answers.address); // Replace with field names
+        formData.append('entry.1486545489', answers.mobileNumber); // Replace with field names
+        formData.append('entry.905488960', answers.email); // Replace with field names
+        formData.append('entry.266776651', answers.bio); // Replace with field names
+        formData.append('entry.933937910', answers.instagram); // Replace with field names
+        formData.append('entry.2052783211', answers.facebook); // Replace with field names
+        formData.append('entry.1476922231', answers.twitter); // Replace with field names
+        formData.append('entry.133240640', answers.portfoliolink); // Replace with field names
+        formData.append('entry.873872541', answers.creativeField.join(',')); // Replace with field names
+
+        // Post to Google Forms
+        await fetch('https://docs.google.com/forms/d/e/1FAIpQLScSyKe6QAmaAvveOoKVXWaz3uGvdy_UglcU4wAYizFgQa9jhw/formResponse', {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        });
+    };
+
     // Move to next question with transition
     const nextQuestion = () => {
         if (validateInput()) {
@@ -215,7 +236,11 @@ export default function RegisterForm() {
                     setCurrentQuestion(currentQuestion + 1);
                 } else {
                     setCurrentQuestion(questions.length); // Form completed
-                    console.log('Form submitted:', answers);
+                    submitForm().then(() => {
+                        console.log('Form submitted:', answers);
+                    }).catch(err => {
+                        console.error('Form submission error:', err);
+                    });
                 }
                 setTransitioning(false); // Start fade-in
                 setError(null); // Clear error

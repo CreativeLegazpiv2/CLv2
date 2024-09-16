@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from 'react';
+
+
 import Lottie from 'lottie-react'; // Import Lottie component from lottie-react
 import graphicDesignAnimation from '../animation/bg1.json'; // Import Lottie animations
 import webDevelopmentAnimation from '../animation/bg3.json';
@@ -13,7 +15,7 @@ import fineArtsAnimation from '../animation/bg9.json';
 import fashionDesignAnimation from '../animation/bg2.json';
 import otherAnimation from '../animation/bg10.json'; // Add all other Lottie animations
 
-// Define the structure for the form answers
+
 interface FormAnswers {
     firstName: string;
     creativeField: string[];
@@ -27,7 +29,6 @@ interface FormAnswers {
     portfoliolink: string;
 }
 
-// Define the structure for a question object
 interface Question {
     id: keyof FormAnswers;  // keys from the FormAnswers interface
     question: string;
@@ -38,6 +39,8 @@ interface Question {
 }
 
 export default function RegisterForm() {
+    
+
     const [currentQuestion, setCurrentQuestion] = useState(-1); // Start with -1 for welcome screen
     const [answers, setAnswers] = useState<FormAnswers>({
         firstName: '',
@@ -82,15 +85,15 @@ export default function RegisterForm() {
             question: "We'd love to know more about your work! Which creative domain do you dabble in?",
             type: 'buttons',
             options: [
-                'Graphic Design',
-                'Web Development',
-                'Photography',
-                'Writing',
-                'Music',
-                'Gaming',
-                'Film',
-                'Fine Arts',
-                'Fashion Design',
+                'AudioVisual Media',
+                'Digital Interactive Media',
+                'Creative Services',
+                'Design',
+                'Publishing and Printed Media',
+                'Performing Arts',
+                'Visual Arts',
+                'Traditional Cultural Expressions',
+                'Cultural Sites',
                 'Other',
             ],
             required: true,
@@ -109,7 +112,7 @@ export default function RegisterForm() {
         },
         {
             id: 'email',
-            question: "Could you please share your email address with us? We'll use it to stay in touch and keep you updated in a more formal way!",
+            question: "Could you please share your email address with us? We'll use it to stay in touch and keep you updated in a more formal way.",
             type: 'text',
             required: true,
         },
@@ -242,7 +245,7 @@ export default function RegisterForm() {
             </div>
 
             {/* Overlay and Form Container */}
-            <div className="relative z-20 bg-white bg-opacity-80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl max-w-lg w-full mx-4 animate-fade-in-up">
+            <div className="relative z-20 bg-white bg-opacity-80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl max-w-4xl w-full animate-fade-in-up">
                 {/* Welcome Screen */}
                 {currentQuestion === -1 && (
                     <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
@@ -250,7 +253,7 @@ export default function RegisterForm() {
                             <span className="underline decoration-[#403737]">Welcome</span> to the Creative Individuals Registration Form!
                         </h2>
                         <p className="text-sm text-gray-700 mb-4 text-center">
-                            We're excited to have you join us. Please take a moment to fill in your details below. Rest assured, your information will be kept secure in accordance with the <strong>Privacy Act</strong>.
+                            We&apos;re excited to have you join us. Please take a moment to fill in your details below. Rest assured, your information will be kept secure in accordance with the <strong>Privacy Act</strong>.
                         </p>
                         <button
                             onClick={nextQuestion}
@@ -265,9 +268,9 @@ export default function RegisterForm() {
                 {currentQuestion >= 0 && currentQuestion < questions.length && (
                     <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
                         <h2 className="text-xl font-semibold mb-4 leading-tight">
-                            {questions[currentQuestion].question.split("!")[0]}
-                            <span className="font-bold text-[#403737]">!</span>
-                            {questions[currentQuestion].question.split("!")[1]}
+                            {questions[currentQuestion].question.split(":")[0]}
+                            <span className="font-bold text-[#403737]">&nbsp;</span>
+                            {questions[currentQuestion].question.split(":")[1]}
                         </h2>
 
                         {/* Input field for text or textarea questions */}
@@ -296,7 +299,7 @@ export default function RegisterForm() {
 
                         {/* Button selection for "creative field" */}
                         {questions[currentQuestion].type === 'buttons' && (
-                            <div className="grid grid-cols-2 gap-4 mb-6">
+                            <div className="grid grid-cols-3 gap-4 mb-6">
                                 {questions[currentQuestion].options?.map((option) => (
                                     <button
                                         key={option}
@@ -330,10 +333,10 @@ export default function RegisterForm() {
                 {currentQuestion === questions.length && (
                     <div className={`transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
                         <h2 className="text-2xl font-semibold mb-4 text-center leading-tight">
-                            We're delighted to have you on board!
+                            We&apos;re delighted to have you on board!
                         </h2>
                         <p className="text-sm text-gray-700 mb-4 text-center">
-                            We're also grateful for your time and effort on sharing your details with us. Please keep in touch with us on our website <a href="https://creativelegazpi.ph" className="underline text-[#403737]">creativelegazpi.ph</a> when the directory goes live. Thank you so much! We'll be in touch soon.
+                            We&apos;re also grateful for your time and effort on sharing your details with us. Please keep in touch with us on our website <a href="https://creativelegazpi.ph" className="underline text-[#403737]">creativelegazpi.ph</a> when the directory goes live. Thank you so much! We&apos;ll be in touch soon.
                         </p>
                         <button
                             onClick={() => window.location.href = 'https://creativelegazpi.ph'}

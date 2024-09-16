@@ -208,25 +208,37 @@ export default function RegisterForm() {
 
     const submitForm = async () => {
         const formData = new FormData();
-
+    
+        // Helper function to ensure "None" is used for empty values
         const getValueOrNone = (value: string | string[] | undefined) => {
             if (Array.isArray(value)) {
-                return value.length > 0 ? value.join(', ') : 'None';
+                return value.length > 0 ? value : ['None'];  // Return array with 'None' if empty
             }
             return value?.trim() === '' ? 'None' : value || 'None';
         };
-
+    
+        // Append form data for non-multiple choice fields
         formData.append('entry.1423761216', answers.firstName); 
         formData.append('entry.596935029', answers.address); 
         formData.append('entry.1486545489', answers.mobileNumber); 
         formData.append('entry.905488960', answers.email); 
         formData.append('entry.266776651', answers.bio); 
-        formData.append('entry.933937910', getValueOrNone(answers.instagram));
-        formData.append('entry.2052783211', getValueOrNone(answers.facebook)); 
-        formData.append('entry.1476922231', getValueOrNone(answers.twitter)); 
-        formData.append('entry.133240640', getValueOrNone(answers.portfoliolink)); 
-        formData.append('entry.873872541', answers.creativeField.join(',')); 
-
+        formData.append('entry.933937910', getValueOrNone(answers.instagram) as string);  // Cast to string
+        formData.append('entry.2052783211', getValueOrNone(answers.facebook) as string); 
+        formData.append('entry.1476922231', getValueOrNone(answers.twitter) as string); 
+        formData.append('entry.133240640', getValueOrNone(answers.portfoliolink) as string); 
+        
+        // Handle multiple selected options for creativeField
+        const creativeFields = answers.creativeField || [];
+        
+        if (Array.isArray(creativeFields)) {
+            creativeFields.forEach((field) => {
+                formData.append('entry.873872541', field);  // Append each field separately
+            });
+        } else {
+            formData.append('entry.873872541', 'None');  // Fallback if no fields selected
+        }
+    
         // Post to Google Forms
         await fetch('https://docs.google.com/forms/d/e/1FAIpQLScSyKe6QAmaAvveOoKVXWaz3uGvdy_UglcU4wAYizFgQa9jhw/formResponse', {
             method: 'POST',
@@ -243,6 +255,7 @@ export default function RegisterForm() {
             console.error('Form submission error:', err);
         });
     };
+    
 
     // Move to next question with transition
     const nextQuestion = () => {
